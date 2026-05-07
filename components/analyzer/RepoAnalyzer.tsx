@@ -4,13 +4,25 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoSearchOutline, IoCloseCircleOutline, IoWarningOutline } from 'react-icons/io5';
 import { RiGithubLine } from 'react-icons/ri';
-import { fetchRepo, fetchLanguages, fetchContents, parseRepoUrl } from '@/lib/github';
+import {
+  fetchRepo,
+  fetchLanguages,
+  fetchContents,
+  fetchCommits,
+  fetchContributors,
+  fetchBranches,
+  fetchReleases,
+  parseRepoUrl,
+} from '@/lib/github';
 import type { AnalyzerState } from '@/types';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import RepoStats from './RepoStats';
 import TechStack from './TechStack';
 import ProjectStructure from './ProjectStructure';
+import RecentCommits from './RecentCommits';
+import Contributors from './Contributors';
+import BranchesAndReleases from './BranchesAndReleases';
 
 const EXAMPLE_REPOS = [
   'facebook/react',
@@ -24,6 +36,10 @@ const INITIAL: AnalyzerState = {
   repo: null,
   languages: null,
   contents: null,
+  commits: null,
+  contributors: null,
+  branches: null,
+  releases: null,
   loading: false,
   error: null,
 };
@@ -46,15 +62,36 @@ export default function RepoAnalyzer() {
       return;
     }
 
-    setState({ repo: null, languages: null, contents: null, loading: true, error: null });
+    setState({ ...INITIAL, loading: true });
 
     try {
+      // Core data — must succeed for the page to render meaningfully.
       const [repo, languages, contents] = await Promise.all([
         fetchRepo(parsed.owner, parsed.repo),
         fetchLanguages(parsed.owner, parsed.repo),
         fetchContents(parsed.owner, parsed.repo),
       ]);
-      setState({ repo, languages, contents, loading: false, error: null });
+
+      // Auxiliary data — degrade gracefully if any individual call fails
+      // (e.g. empty repo has no commits, repo with no releases, etc.).
+      const [commits, contributors, branches, releases] = await Promise.all([
+        fetchCommits(parsed.owner, parsed.repo).catch(() => []),
+        fetchContributors(parsed.owner, parsed.repo).catch(() => []),
+        fetchBranches(parsed.owner, parsed.repo).catch(() => []),
+        fetchReleases(parsed.owner, parsed.repo).catch(() => []),
+      ]);
+
+      setState({
+        repo,
+        languages,
+        contents,
+        commits,
+        contributors,
+        branches,
+        releases,
+        loading: false,
+        error: null,
+      });
     } catch (err) {
       setState((s) => ({
         ...s,
@@ -199,6 +236,19 @@ export default function RepoAnalyzer() {
                 />
               )}
             </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+              {state.commits && <RecentCommits commits={state.commits} />}
+              {state.contributors && <Contributors contributors={state.contributors} />}
+            </div>
+
+            {(state.branches || state.releases) && (
+              <BranchesAndReleases
+                branches={state.branches ?? []}
+                releases={state.releases ?? []}
+                defaultBranch={state.repo.default_branch}
+              />
+            )}
           </motion.div>
         )}
       </AnimatePresence>

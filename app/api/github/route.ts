@@ -26,10 +26,16 @@ export async function GET(req: NextRequest) {
     );
   }
 
+  const perPage = searchParams.get('per_page');
+
   const endpointMap: Record<string, string> = {
     repo: `/repos/${owner}/${repo}`,
     languages: `/repos/${owner}/${repo}/languages`,
     contents: `/repos/${owner}/${repo}/contents`,
+    commits: `/repos/${owner}/${repo}/commits?per_page=${perPage ?? 10}`,
+    contributors: `/repos/${owner}/${repo}/contributors?per_page=${perPage ?? 10}`,
+    branches: `/repos/${owner}/${repo}/branches?per_page=${perPage ?? 30}`,
+    releases: `/repos/${owner}/${repo}/releases?per_page=${perPage ?? 5}`,
   };
 
   const endpoint = endpointMap[type];

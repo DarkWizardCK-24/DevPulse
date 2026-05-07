@@ -49,10 +49,65 @@ export interface ContentItem {
   sha: string;
 }
 
+export interface CommitAuthor {
+  name: string;
+  email: string;
+  date: string;
+}
+
+export interface CommitData {
+  sha: string;
+  html_url: string;
+  commit: {
+    message: string;
+    author: CommitAuthor;
+    committer: CommitAuthor;
+  };
+  author: {
+    login: string;
+    avatar_url: string;
+    html_url: string;
+  } | null;
+}
+
+export interface ContributorData {
+  login: string;
+  id: number;
+  avatar_url: string;
+  html_url: string;
+  contributions: number;
+  type: string;
+}
+
+export interface BranchData {
+  name: string;
+  commit: { sha: string; url: string };
+  protected: boolean;
+}
+
+export interface ReleaseData {
+  id: number;
+  name: string | null;
+  tag_name: string;
+  html_url: string;
+  published_at: string | null;
+  prerelease: boolean;
+  draft: boolean;
+  author: {
+    login: string;
+    avatar_url: string;
+    html_url: string;
+  };
+}
+
 export interface AnalyzerState {
   repo: RepoData | null;
   languages: LanguageData | null;
   contents: ContentItem[] | null;
+  commits: CommitData[] | null;
+  contributors: ContributorData[] | null;
+  branches: BranchData[] | null;
+  releases: ReleaseData[] | null;
   loading: boolean;
   error: string | null;
 }

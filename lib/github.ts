@@ -1,4 +1,12 @@
-import type { RepoData, LanguageData, ContentItem } from '@/types';
+import type {
+  RepoData,
+  LanguageData,
+  ContentItem,
+  CommitData,
+  ContributorData,
+  BranchData,
+  ReleaseData,
+} from '@/types';
 
 const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://localhost:8000';
 // Self-routes (Next.js API handlers) — use a relative path so the request
@@ -56,6 +64,58 @@ export async function fetchContents(owner: string, repo: string): Promise<Conten
   return githubFetch<ContentItem[]>(
     `/api/github/contents?owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(repo)}`,
     `/api/github?type=contents&owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(repo)}`,
+  );
+}
+
+export async function fetchCommits(
+  owner: string,
+  repo: string,
+  perPage = 10,
+): Promise<CommitData[]> {
+  const o = encodeURIComponent(owner);
+  const r = encodeURIComponent(repo);
+  return githubFetch<CommitData[]>(
+    `/api/github/commits?owner=${o}&repo=${r}&per_page=${perPage}`,
+    `/api/github?type=commits&owner=${o}&repo=${r}&per_page=${perPage}`,
+  );
+}
+
+export async function fetchContributors(
+  owner: string,
+  repo: string,
+  perPage = 10,
+): Promise<ContributorData[]> {
+  const o = encodeURIComponent(owner);
+  const r = encodeURIComponent(repo);
+  return githubFetch<ContributorData[]>(
+    `/api/github/contributors?owner=${o}&repo=${r}&per_page=${perPage}`,
+    `/api/github?type=contributors&owner=${o}&repo=${r}&per_page=${perPage}`,
+  );
+}
+
+export async function fetchBranches(
+  owner: string,
+  repo: string,
+  perPage = 30,
+): Promise<BranchData[]> {
+  const o = encodeURIComponent(owner);
+  const r = encodeURIComponent(repo);
+  return githubFetch<BranchData[]>(
+    `/api/github/branches?owner=${o}&repo=${r}&per_page=${perPage}`,
+    `/api/github?type=branches&owner=${o}&repo=${r}&per_page=${perPage}`,
+  );
+}
+
+export async function fetchReleases(
+  owner: string,
+  repo: string,
+  perPage = 5,
+): Promise<ReleaseData[]> {
+  const o = encodeURIComponent(owner);
+  const r = encodeURIComponent(repo);
+  return githubFetch<ReleaseData[]>(
+    `/api/github/releases?owner=${o}&repo=${r}&per_page=${perPage}`,
+    `/api/github?type=releases&owner=${o}&repo=${r}&per_page=${perPage}`,
   );
 }
 
