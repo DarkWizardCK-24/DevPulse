@@ -14,6 +14,8 @@ const navLinks = [
   { href: '/playground', label: 'Playground', icon: <RiTerminalBoxLine size={15} /> },
 ];
 
+const REPO_URL = 'https://github.com/DarkWizardCK-24/DevPulse';
+
 export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -69,15 +71,17 @@ export default function Navbar() {
                       : 'text-text-secondary hover:text-text-primary hover:bg-bg-elevated',
                   )}
                 >
-                  {icon}
-                  {label}
                   {active && (
                     <motion.span
                       layoutId="nav-indicator"
-                      className="absolute inset-0 bg-[rgba(0,255,136,0.08)] border border-[rgba(0,255,136,0.2)] rounded-lg"
+                      className="absolute inset-0 bg-[rgba(0,255,136,0.08)] border border-[rgba(0,255,136,0.2)] rounded-lg pointer-events-none"
                       transition={{ type: 'spring', bounce: 0.2, duration: 0.4 }}
                     />
                   )}
+                  <span className="relative z-10 flex items-center gap-1.5">
+                    {icon}
+                    {label}
+                  </span>
                 </Link>
               );
             })}
@@ -86,7 +90,7 @@ export default function Navbar() {
           {/* Right side */}
           <div className="hidden md:flex items-center gap-3">
             <a
-              href="https://github.com"
+              href={REPO_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-secondary border border-border-default rounded-lg hover:text-text-primary hover:border-[#333] transition-all duration-200"
@@ -138,7 +142,7 @@ export default function Navbar() {
               })}
               <div className="pt-2 border-t border-border-subtle mt-2">
                 <a
-                  href="https://github.com"
+                  href={REPO_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 px-4 py-3 text-sm font-mono text-text-secondary hover:text-text-primary transition-colors"

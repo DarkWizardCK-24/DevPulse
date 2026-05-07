@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { IoCodeSlashOutline, IoHeartOutline } from 'react-icons/io5';
 import { RiGithubLine, RiTwitterXLine } from 'react-icons/ri';
 
+const REPO_URL = 'https://github.com/DarkWizardCK-24/DevPulse';
+
 const links = {
   product: [
     { href: '/analyzer', label: 'Analyzer' },
@@ -35,9 +37,10 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-3 mt-4">
               <a
-                href="https://github.com"
+                href={REPO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="GitHub repository"
                 className="p-2 rounded-lg border border-border-default text-text-secondary hover:text-text-primary hover:border-[#333] transition-all duration-200"
               >
                 <RiGithubLine size={16} />

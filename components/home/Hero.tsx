@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { IoArrowForwardOutline, IoPlayOutline } from 'react-icons/io5';
+import { IoArrowForwardOutline } from 'react-icons/io5';
 import { RiGithubLine, RiTerminalBoxLine } from 'react-icons/ri';
 import Button from '@/components/ui/Button';
 
@@ -61,6 +61,7 @@ const stats = [
 ];
 
 export default function Hero() {
+  const router = useRouter();
   return (
     <section className="relative min-h-screen flex items-center pt-16 overflow-hidden">
       {/* Grid background */}
@@ -119,25 +120,23 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.5 }}
               className="flex flex-wrap gap-3 mb-10"
             >
-              <Link href="/analyzer">
-                <Button
-                  size="lg"
-                  icon={<RiGithubLine size={18} />}
-                  iconPosition="left"
-                >
-                  Analyze a Repo
-                </Button>
-              </Link>
-              <Link href="/playground">
-                <Button
-                  size="lg"
-                  variant="secondary"
-                  icon={<RiTerminalBoxLine size={18} />}
-                  iconPosition="left"
-                >
-                  API Playground
-                </Button>
-              </Link>
+              <Button
+                size="lg"
+                icon={<RiGithubLine size={18} />}
+                iconPosition="left"
+                onClick={() => router.push('/analyzer')}
+              >
+                Analyze a Repo
+              </Button>
+              <Button
+                size="lg"
+                variant="secondary"
+                icon={<RiTerminalBoxLine size={18} />}
+                iconPosition="left"
+                onClick={() => router.push('/playground')}
+              >
+                API Playground
+              </Button>
             </motion.div>
 
             {/* Stats */}
