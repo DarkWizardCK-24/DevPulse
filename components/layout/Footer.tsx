@@ -1,5 +1,6 @@
+import Image from 'next/image';
 import Link from 'next/link';
-import { IoCodeSlashOutline, IoHeartOutline } from 'react-icons/io5';
+import { IoHeartOutline } from 'react-icons/io5';
 import { RiGithubLine, RiTwitterXLine } from 'react-icons/ri';
 
 const REPO_URL = 'https://github.com/DarkWizardCK-24/DevPulse';
@@ -23,9 +24,14 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <Link href="/" className="flex items-center gap-2.5 mb-3 group w-fit">
-              <div className="relative w-7 h-7 flex items-center justify-center">
-                <div className="absolute inset-0 bg-green-pulse rounded-md opacity-15 group-hover:opacity-25 transition-opacity" />
-                <IoCodeSlashOutline className="text-green-pulse relative z-10" size={15} />
+              <div className="relative w-7 h-7 flex items-center justify-center rounded-md overflow-hidden">
+                <Image
+                  src="/logo.png"
+                  alt="DevPulse"
+                  width={28}
+                  height={28}
+                  className="object-contain group-hover:scale-105 transition-transform duration-200"
+                />
               </div>
               <span className="font-display text-sm font-bold tracking-wider text-white">
                 Dev<span className="text-green-pulse">Pulse</span>

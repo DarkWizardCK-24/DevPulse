@@ -8,6 +8,13 @@ export const metadata: Metadata = {
   description:
     'Analyze any public GitHub repository and test REST APIs interactively. Detect tech stacks, view repo stats, and debug APIs — all in one place.',
   keywords: ['github analyzer', 'api playground', 'developer tool', 'tech stack detector'],
+  icons: {
+    icon: [
+      { url: '/logo.png', type: 'image/png' },
+    ],
+    shortcut: '/logo.png',
+    apple: '/logo.png',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

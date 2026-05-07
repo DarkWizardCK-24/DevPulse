@@ -1,10 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { IoMenuOutline, IoCloseOutline, IoCodeSlashOutline } from 'react-icons/io5';
+import { IoMenuOutline, IoCloseOutline } from 'react-icons/io5';
 import { RiGithubLine, RiTerminalBoxLine } from 'react-icons/ri';
 import { cn } from '@/lib/utils';
 
@@ -47,9 +48,15 @@ export default function Navbar() {
         <div className="container-app flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="relative w-8 h-8 flex items-center justify-center">
-              <div className="absolute inset-0 bg-green-pulse rounded-lg opacity-20 group-hover:opacity-30 transition-opacity" />
-              <IoCodeSlashOutline className="text-green-pulse relative z-10" size={18} />
+            <div className="relative w-8 h-8 flex items-center justify-center rounded-lg overflow-hidden">
+              <Image
+                src="/logo.png"
+                alt="DevPulse"
+                width={32}
+                height={32}
+                priority
+                className="object-contain group-hover:scale-105 transition-transform duration-200"
+              />
             </div>
             <span className="font-display text-sm font-bold tracking-wider text-white">
               Dev<span className="text-green-pulse">Pulse</span>
