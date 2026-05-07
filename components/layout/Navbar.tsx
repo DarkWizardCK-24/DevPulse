@@ -47,7 +47,16 @@ export default function Navbar() {
       >
         <div className="container-app flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
+          <Link
+            href="/"
+            onClick={(e) => {
+              if (pathname === '/') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }}
+            className="flex items-center gap-2.5 group"
+          >
             <div className="relative w-8 h-8 flex items-center justify-center rounded-lg overflow-hidden">
               <Image
                 src="/logo.png"
@@ -71,6 +80,12 @@ export default function Navbar() {
                 <Link
                   key={href}
                   href={href}
+                  onClick={(e) => {
+                    if (active) {
+                      e.preventDefault();
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                  }}
                   className={cn(
                     'relative flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-mono transition-all duration-200',
                     active
@@ -135,6 +150,13 @@ export default function Navbar() {
                   <Link
                     key={href}
                     href={href}
+                    onClick={(e) => {
+                      if (active) {
+                        e.preventDefault();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }
+                      setMenuOpen(false);
+                    }}
                     className={cn(
                       'flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-mono transition-all duration-200',
                       active
