@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { IoMenuOutline, IoCloseOutline } from 'react-icons/io5';
 import { RiGithubLine, RiTerminalBoxLine } from 'react-icons/ri';
 import { cn } from '@/lib/utils';
+import AuthButton from '@/components/auth/AuthButton';
 
 const navLinks = [
   { href: '/', label: 'Home', icon: null },
@@ -120,6 +121,13 @@ export default function Navbar() {
               <RiGithubLine size={16} />
               <span>GitHub</span>
             </a>
+            <a
+              href="http://localhost:3000"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-mono text-text-secondary border border-border-default rounded-lg hover:text-text-primary hover:border-[#333] transition-all duration-200"
+            >
+              ↩ DevFolio
+            </a>
+            <AuthButton />
           </div>
 
           {/* Mobile menu button */}
@@ -179,6 +187,15 @@ export default function Navbar() {
                   <RiGithubLine size={16} />
                   GitHub
                 </a>
+                <a
+                  href="http://localhost:3000"
+                  className="flex items-center gap-3 px-4 py-3 text-sm font-mono text-text-secondary hover:text-text-primary transition-colors"
+                >
+                  ↩ DevFolio
+                </a>
+                <div className="px-4 py-3">
+                  <AuthButton />
+                </div>
               </div>
             </nav>
           </motion.div>
